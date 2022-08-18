@@ -1,0 +1,68 @@
+import { NUM_OF_CELLS } from '../config';
+
+export const matrix = Array(NUM_OF_CELLS).fill(false);
+
+// Change later
+export const setPattern = () => {
+	matrix[1225] = true;
+	matrix[1224] = true;
+	matrix[1223] = true;
+	matrix[1173] = true;
+	matrix[1124] = true;
+};
+
+export const reset = () => {
+	let n = NUM_OF_CELLS;
+	for (let i = 0; i < n; i += 1) {
+		matrix[i] = false;
+	}
+};
+
+export const setDataToEngine = (index) => {
+	matrix[index] = !matrix[index];
+};
+
+const getNeighbours = (x) => {
+	let i;
+	const neighboursArray = [
+		x + 1,
+		x - 1,
+		x - 49,
+		x - 50,
+		x - 51,
+		x + 49,
+		x + 50,
+		x + 51,
+	];
+	for (i = 0; i < 8; i += 1) {
+		if (neighboursArray[i] < 0)
+			neighboursArray[i] = neighboursArray[i] + NUM_OF_CELLS;
+		if (neighboursArray[i] >= NUM_OF_CELLS)
+			neighboursArray[i] = neighboursArray[i] - NUM_OF_CELLS;
+	}
+	return neighboursArray;
+};
+
+export const runLife = () => {
+	const matrixMirror = [...matrix];
+	let n = NUM_OF_CELLS;
+	for (let i = 0; i < n; i += 1) {
+		const neighbours = getNeighbours(i);
+		let nn = neighbours.length;
+		let count = 0;
+		for (let ii = 0; ii < nn; ii += 1) {
+			const neighbourIndex = neighbours[ii];
+			if (matrix[neighbourIndex]) count += 1;
+		}
+		if (matrix[i] && count <= 1) matrixMirror[i] = false;
+		if (matrix[i] && count >= 4) matrixMirror[i] = false;
+		if (matrix[i] && (count === 2 || count === 3)) matrixMirror[i] = true;
+		if (!matrix[i] && count === 3) {
+			matrixMirror[i] = true;
+		}
+	}
+
+	for (let i = 0; i < n; i += 1) {
+		matrix[i] = matrixMirror[i];
+	}
+};
