@@ -7,13 +7,13 @@ const Grid = (props) => {
 						<div
 							key={i}
 							className='cell alive'
-							onClick={() => props.onChangeHandler(i)}
+							onClick={() => props.onChangeHandler([i])}
 						></div>
 					) : (
 						<div
 							key={i}
 							className='cell'
-							onClick={() => props.onChangeHandler(i)}
+							onClick={() => props.onChangeHandler([i])}
 						></div>
 					);
 				})}

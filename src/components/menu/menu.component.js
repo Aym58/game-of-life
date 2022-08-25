@@ -18,15 +18,19 @@ const Menu = (props) => {
 				<div className='menu-item' onClick={props.onClearHandler}>
 					Clear
 				</div>
+
+				<div className='menu-item' onClick={props.onAboutHandler}>
+					About
+				</div>
 			</div>
 			<div className='speed-wrapper'>
 				<span>Speed</span>
 				<input
 					className='speed-selector'
 					type='range'
-					min='100'
-					max='1100'
-					step='100'
+					min='50'
+					max='1150'
+					step='50'
 					value={props.speed}
 					onChange={props.onSpeedHandler}
 				/>

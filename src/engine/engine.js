@@ -2,24 +2,20 @@ import { NUM_OF_CELLS } from '../config';
 
 export const matrix = Array(NUM_OF_CELLS).fill(false);
 
-// Change later
-export const setPattern = () => {
-	matrix[1225] = true;
-	matrix[1224] = true;
-	matrix[1223] = true;
-	matrix[1173] = true;
-	matrix[1124] = true;
-};
-
 export const reset = () => {
-	let n = NUM_OF_CELLS;
-	for (let i = 0; i < n; i += 1) {
+	for (let i = NUM_OF_CELLS; i >= 0; i -= 1) {
 		matrix[i] = false;
 	}
 };
 
 export const setDataToEngine = (index) => {
 	matrix[index] = !matrix[index];
+};
+
+export const setPatternToEngine = (indexArr) => {
+	indexArr.forEach((element) => {
+		matrix[element] = true;
+	});
 };
 
 const getNeighbours = (x) => {
@@ -62,7 +58,7 @@ export const runLife = () => {
 		}
 	}
 
-	for (let i = 0; i < n; i += 1) {
+	for (let i = NUM_OF_CELLS; i >= 0; i -= 1) {
 		matrix[i] = matrixMirror[i];
 	}
 };

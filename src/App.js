@@ -2,19 +2,22 @@ import './App.css';
 import { useState, useEffect } from 'react';
 import Menu from './components/menu/menu.component';
 import Grid from './components/grid/grid.component';
+import About from './components/about/about.component';
 import {
 	matrix,
 	setDataToEngine,
+	setPatternToEngine,
 	runLife,
 	reset,
-	setPattern,
 } from './engine/engine';
 import { DEFAULT_INTERVAL } from './config';
+import patterns from './patterns';
 
 function App() {
 	const [cells, setCells] = useState(matrix);
 	const [run, setRun] = useState(false);
 	const [speed, setSpeed] = useState(DEFAULT_INTERVAL);
+	const [showAbout, setShowAbout] = useState(false);
 
 	const onSetCells = (index) => {
 		setDataToEngine(index);
@@ -35,8 +38,21 @@ function App() {
 		setSpeed(time);
 	};
 
+	const onAboutHandler = () => {
+		setShowAbout(!showAbout);
+	};
+
+	const setPatternHandler = (pattern) => {
+		onClear();
+		if (pattern === 'glider') setPatternToEngine(patterns.glider);
+		if (pattern === 'spaceship') setPatternToEngine(patterns.spaceship);
+		if (pattern === 'pulsar') setPatternToEngine(patterns.pulsar);
+		setCells(matrix.slice());
+	};
+
 	useEffect(() => {
-		setPattern();
+		onClear();
+		setPatternToEngine(patterns.glider);
 		setCells(matrix.slice());
 	}, []);
 
@@ -57,9 +73,17 @@ function App() {
 				onStartHandler={onStart}
 				onClearHandler={onClear}
 				onSpeedHandler={onChangeSpeed}
+				onAboutHandler={onAboutHandler}
 				speed={speed}
 			/>
-			<Grid matrix={cells} onChangeHandler={onSetCells} />
+			{!showAbout ? (
+				<Grid matrix={cells} onChangeHandler={onSetCells} />
+			) : (
+				<About
+					onAboutHandler={onAboutHandler}
+					setPatternHandler={setPatternHandler}
+				/>
+			)}
 		</div>
 	);
 }
