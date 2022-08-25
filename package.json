@@ -2,6 +2,7 @@
 	"name": "game-of-life",
 	"version": "1.1.0",
 	"private": true,
+	"homepage": "https://aym58.github.io",
 	"dependencies": {
 		"@testing-library/jest-dom": "^5.16.5",
 		"@testing-library/react": "^13.3.0",
